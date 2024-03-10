@@ -2,13 +2,12 @@
 
 function intersection(nums1: number[], nums2: number[]): number[] {
 
-    nums1.forEach((num) => {
-        if (nums2.includes(num)) {
-            intersection[num] = true;
-        }
-    });
+    if (nums1.length < nums2.length) {
+        return intersect(nums1, nums2);
+    } else {
+        return intersect(nums2, nums1);
+    }
 
-    return Object.keys(intersection).map((key) => parseInt(key));
 };
 
 function intersect(a: number[], b: number[]): number[] {
