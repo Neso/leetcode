@@ -13,12 +13,52 @@
 interface ListNode {
     val: number;
     next: ListNode | null;
-    previous: ListNode | null;
 }
 
 function removeZeroSumSublists(head: ListNode | null): ListNode | null {
     let current = head;
+
+    let numbers: number[] = [];
+
+    while (current) {
+        numbers.push(current.val);
+        current = current.next;
+    }
+
+    let numbersCleaned = checkZeroSums(numbers);
+
+    let newHead: ListNode | null = null;
+    let currentNew: ListNode | null = newHead;
+
+    for (let i = 0; i < numbersCleaned.length; i++) {
+        if (currentNew) {
+            currentNew.next = {
+                val: numbersCleaned[i],
+                next: null
+            };
+
+            currentNew = currentNew.next;
+        } else {
+            newHead = {
+                val: numbersCleaned[i],
+                next: null
+            };
+
+            currentNew = newHead;
+        }
+    }
+
+    return newHead;
+};
+
+
+
+
+function removeZeroSumSublists(head: ListNode | null): ListNode | null {
+    let current = head;
     let previous: ListNode | null = null;
+
+    let sumLists: {[key: number]: ListNode} = {};
 
     while (current?.val !== 0) {
         current = current?.next || null;
