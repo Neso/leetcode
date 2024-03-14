@@ -51,7 +51,45 @@ function removeZeroSumSublists(head: ListNode | null): ListNode | null {
     return newHead;
 };
 
+function checkZeroSums(numbers: number[]): number[] {
+    let numbersCleaned = numbers;
 
+    let isListChanged = false;
+
+    if (numbersCleaned.length === 0) {
+        return numbersCleaned;
+    } else if (numbersCleaned.length === 1) {
+        if (numbersCleaned[0] === 0) {
+            return [];
+        } else {
+            return numbersCleaned;
+        }
+    } else {
+        do {
+            isListChanged = false;
+
+            for (let i = 0; i < numbersCleaned.length; i++) {
+                let sum = 0;
+
+                for (let j = i; j < numbersCleaned.length; j++) {
+                    sum += numbersCleaned[j];
+
+                    if (sum === 0) {
+                        numbersCleaned = numbersCleaned.slice(0, i).concat(numbersCleaned.slice(j + 1));
+                        isListChanged = true;
+                        break;
+                    }
+                }
+
+                if (isListChanged) {
+                    break;
+                }
+            }
+        } while (isListChanged);
+    }
+
+    return numbersCleaned;
+}
 
 
 function removeZeroSumSublists(head: ListNode | null): ListNode | null {
