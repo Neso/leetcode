@@ -65,9 +65,11 @@ function minCostClimbingStairs(cost: number[]): number {
 
             const ncost = steps[minimumIndex] + nextA;
 
+            console.log("new cost", ncost, steps[minimumIndex + 1])
+
             if (steps[minimumIndex + 1] && steps[minimumIndex + 1] > ncost) {
                 steps[minimumIndex + 1] = ncost;
-            } else {
+            } else if (!steps[minimumIndex + 1]) {
                 steps[minimumIndex + 1] = ncost;
             }
         }
@@ -79,7 +81,7 @@ function minCostClimbingStairs(cost: number[]): number {
 
             if (steps[minimumIndex + 2] && steps[minimumIndex + 2] > ncost) {
                 steps[minimumIndex + 2] = ncost;
-            } else {
+            } else if (!steps[minimumIndex + 2]) {
                 steps[minimumIndex + 2] = ncost;
             }
         }
@@ -90,9 +92,21 @@ function minCostClimbingStairs(cost: number[]): number {
     }
 
     console.log("steps final", steps);
-    console.log("exit cost", exitCost)
+    console.log("exit cost", exitCost);
 
-    return steps[1] < steps[2] ? steps[1] : steps[2];
+    if (exitCost.length === 0) {
+        return 0;
+    }
+
+    let min = exitCost[0];
+
+    for (let i = 0; i < exitCost.length; i++) {
+        if (exitCost[i] < min) {
+            min = exitCost[i];
+        }
+    }
+
+    return min;
 };
 
 function minimumCost(steps: {[key: string]: number}): number {
